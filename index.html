@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart LED Motion Lamp</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family: 'Segoe UI', sans-serif; background:#0e0e0e; color:white; direction:rtl;}
+nav{display:flex; justify-content:space-between; padding:20px; background:black; position:sticky; top:0;}
+nav h2{color:#00ff99;}
+nav a{color:white; text-decoration:none; margin-left:15px;}
+.hero{text-align:center; padding:50px 20px; animation:fade 1s ease-in-out;}
+@keyframes fade{from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)}}
+.hero h1{font-size:32px; margin:15px 0;}
+.hero p{color:#aaa; font-size:18px;}
+.hero img{width:60%; border-radius:12px; margin-bottom:15px;}
+.price{color:#00ff99; font-size:28px; margin:15px 0;}
+.stock{color:red; font-weight:bold;}
+button{padding:15px 35px; border:none; border-radius:8px; background:#00ff99; color:black; font-size:18px; cursor:pointer; transition:.3s;}
+button:hover{transform:scale(1.05);}
+.section{padding:50px 20px; text-align:center;}
+.features{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; margin-top:30px;}
+.card{background:#1a1a1a; padding:20px; border-radius:12px; transition:.3s;}
+.card:hover{transform:translateY(-10px); background:#222;}
+.card img{width:100%; border-radius:10px; margin-bottom:10px;}
+form{max-width:400px; margin:30px auto; display:none;}
+input{width:100%; padding:12px; margin-bottom:15px; border-radius:6px; border:none;}
+footer{background:black; padding:20px; text-align:center; margin-top:40px; color:#888;}
+</style>
+</head>
+
+<body>
+
+<nav>
+<h2>SMART LED</h2>
+<div>
+<a href="#">الرئيسية</a>
+<a href="#">المميزات</a>
+<a href="#">تواصل</a>
+</div>
+</nav>
+
+<div class="hero">
+<img src="https://m.media-amazon.com/images/I/51MM182cglL.jpg" alt="لمبة LED ذكية">
+<h1>إضاءة ذكية بحساس حركة</h1>
+<p>تنور تلقائيًا وتطفي لوحدها 👌</p>
+<div class="price">449ج بدل 799ج</div>
+<div class="stock">باقي 12 قطعة فقط 🔥</div>
+<br>
+<button onclick="showForm()">اطلب الآن</button>
+</div>
+
+<div class="section">
+<h2>المميزات</h2>
+<div class="features">
+<div class="card">
+<img src="https://m.media-amazon.com/images/I/61QFssJyO9L._AC_UF1000%2C1000_QL80_.jpg" alt="لمبة LED">
+<h3>حساس حركة دقيق</h3>
+<p>يكتشف الحركة في الظلام فورًا</p>
+</div>
+<div class="card">
+<img src="pictures/WhatsApp Image 2026-02-27 at 1.23.33 AM.jpeg" alt="لمبة LED">
+<h3>توفير كهرباء</h3>
+<p>تقلل الاستهلاك بنسبة كبيرة</p>
+</div>
+<div class="card">
+<img src="pictures/WhatsApp Image 2026-02-27 at 1.23.34 AM.jpeg" alt="لمبة LED">
+<h3>تركيب سهل</h3>
+<p>بدون فني أو أدوات</p>
+</div>
+</div>
+</div>
+
+<div class="section">
+<button onclick="showForm()">اطلب قبل انتهاء الكمية</button>
+
+<form id="orderForm">
+<input type="text" id="name" placeholder="الاسم بالكامل" required>
+<input type="text" id="phone" placeholder="رقم الهاتف" required>
+<input type="text" id="address" placeholder="العنوان بالكامل" required>
+<button type="button" onclick="submitOrder()">تأكيد الطلب</button>
+</form>
+</div>
+
+<footer>
+© 2026 Smart LED - جميع الحقوق محفوظة
+</footer>
+
+<script>
+let stock = 12;
+
+function showForm(){
+    document.getElementById("orderForm").style.display="block";
+}
+
+function submitOrder(){
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let address = document.getElementById("address").value;
+
+    if(name && phone && address){
+        let orders = JSON.parse(localStorage.getItem("orders")) || [];
+        orders.push({name,phone,address});
+        localStorage.setItem("orders",JSON.stringify(orders));
+
+        stock--;
+        document.querySelector(".stock").innerHTML = "باقي " + stock + " قطعة فقط 🔥";
+
+        window.location.href="thankyou.html";
+    }
+}
+</script>
+
+</body>
+</html>
